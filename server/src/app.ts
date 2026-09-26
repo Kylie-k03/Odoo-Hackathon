@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import prisma from './prisma';
 import locationRoutes from './routes/locationRoutes';
 import productRoutes from './routes/productRoutes';
+import receiptRoutes from './routes/receiptRoutes';
 import stockRoutes from './routes/stockRoutes';
 import { errorHandler } from './middleware/errorHandler';
 
@@ -50,6 +51,7 @@ app.get('/api/health', async (_req: Request, res: Response) => {
 // Inventory routes
 app.use('/api', locationRoutes);
 app.use('/api', productRoutes);
+app.use('/api', receiptRoutes);
 app.use('/api', stockRoutes);
 
 // 404 handler for undefined routes
