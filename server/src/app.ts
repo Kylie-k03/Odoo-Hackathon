@@ -1,3 +1,4 @@
+import authRoutes from "./routes/authRoutes";
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -19,6 +20,7 @@ app.use(
 );
 app.use(morgan('dev'));
 app.use(express.json());
+app.use("/api/auth", authRoutes);
 
 // Health endpoint with database connectivity probe
 app.get('/api/health', async (_req: Request, res: Response) => {
