@@ -5,10 +5,13 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import prisma from './prisma';
+import adjustmentRoutes from './routes/adjustmentRoutes';
+import deliveryRoutes from './routes/deliveryRoutes';
 import locationRoutes from './routes/locationRoutes';
 import productRoutes from './routes/productRoutes';
 import receiptRoutes from './routes/receiptRoutes';
 import stockRoutes from './routes/stockRoutes';
+import transferRoutes from './routes/transferRoutes';
 import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -52,6 +55,9 @@ app.get('/api/health', async (_req: Request, res: Response) => {
 app.use('/api', locationRoutes);
 app.use('/api', productRoutes);
 app.use('/api', receiptRoutes);
+app.use('/api', deliveryRoutes);
+app.use('/api', transferRoutes);
+app.use('/api', adjustmentRoutes);
 app.use('/api', stockRoutes);
 
 // 404 handler for undefined routes
