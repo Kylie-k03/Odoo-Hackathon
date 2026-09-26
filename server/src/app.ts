@@ -5,6 +5,10 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import prisma from './prisma';
+import locationRoutes from './routes/locationRoutes';
+import productRoutes from './routes/productRoutes';
+import stockRoutes from './routes/stockRoutes';
+import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
 
@@ -43,11 +47,19 @@ app.get('/api/health', async (_req: Request, res: Response) => {
   });
 });
 
+// Inventory routes
+app.use('/api', locationRoutes);
+app.use('/api', productRoutes);
+app.use('/api', stockRoutes);
+
 // 404 handler for undefined routes
 app.use((_req: Request, res: Response) => {
   res.status(404).json({
     error: 'Route not found',
   });
 });
+
+// Error handler — must be registered last
+app.use(errorHandler);
 
 export default app;
