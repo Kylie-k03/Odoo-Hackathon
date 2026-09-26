@@ -22,6 +22,6 @@ This scenario validates the double-entry inventory engine end-to-end.
 5. **Ledger Verification**: Open the Stock Ledger and verify all operations are chronologically recorded. The sum of all entries for `Production Rack` must equal exactly 77.
 
 ## Known Issues & Missing Features
-- **Missing Core Operations**: Delivery, Internal Transfer, and Adjustment APIs are currently pending implementation by the backend team. The Steel Rod flow can only be partially executed (Receipt phase) at this time.
 - **Frontend Divergence**: The active `client/` frontend is currently a scaffold. The actual UI needs to be merged from the `frontend/` directory before end-to-end UI testing can commence.
-- **Analytics**: Pending stable operations and ledger data.
+- **Analytics API**: Pending dedicated endpoints from backend for native aggregations.
+

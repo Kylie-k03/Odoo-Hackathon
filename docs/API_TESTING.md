@@ -24,6 +24,21 @@ The following endpoints have been discovered in the `server/src/routes/` directo
 - `POST /api/receipts` - Create a new receipt (Incoming Stock)
 - `GET /api/receipts/:id` - Get specific receipt details
 
+### Deliveries (`/api/deliveries`)
+- `GET /api/deliveries` - List all deliveries
+- `POST /api/deliveries` - Create a new delivery order (Outgoing Stock)
+- `GET /api/deliveries/:id` - Get specific delivery details
+
+### Internal Transfers (`/api/transfers`)
+- `GET /api/transfers` - List all transfers
+- `POST /api/transfers` - Create a new internal transfer
+- `GET /api/transfers/:id` - Get specific transfer details
+
+### Stock Adjustments (`/api/adjustments`)
+- `GET /api/adjustments` - List all adjustments
+- `POST /api/adjustments` - Create a new manual stock adjustment (Requires Manager/Admin)
+- `GET /api/adjustments/:id` - Get specific adjustment details
+
 ### Stock Ledger & Status (`/api/stock` & `/api/stock-ledger`)
 - `GET /api/stock` - List global stock balances
 - `GET /api/stock/:productId` - Get total stock for a specific product
@@ -34,11 +49,7 @@ The following endpoints have been discovered in the `server/src/routes/` directo
 
 ## Missing APIs (Dependencies)
 
-The following core inventory operations are **not yet implemented** by the Backend Lead. They are documented here as missing dependencies:
+The following core inventory operations are **not yet implemented**:
 
-1. **Delivery Orders (Outgoing)**: Missing routes and controllers to process dispatching stock to customers.
-2. **Internal Transfers**: Missing routes and controllers to move stock from one internal warehouse location to another.
-3. **Stock Adjustments**: Missing routes and controllers to perform manual stock delta corrections.
-4. **Analytics**: No endpoints currently exist to aggregate movement trends or top moving products.
+1. **Analytics**: No endpoints currently exist to aggregate movement trends or top moving products.
 
-*Note: QA testing for these missing modules will commence immediately once the backend PRs are merged into `main`.*
