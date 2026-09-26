@@ -1,10 +1,32 @@
 import { Router } from "express";
-import { createReceipt, getReceipt, listReceipts } from "../controllers/receiptController";
+import { UserRole } from "@prisma/client";
+import {
+  createReceipt,
+  getReceipt,
+  listReceipts,
+} from "../controllers/receiptController";
+import { requireAuth } from "../middleware/auth";
+import { requireRoles } from "../middleware/rbac";
 
 const router = Router();
 
-router.post("/receipts", createReceipt);
-router.get("/receipts", listReceipts);
-router.get("/receipts/:id", getReceipt);
+router.post(
+  "/receipts",
+  requireAuth,
+  requireRoles(UserRole.ADMIN, UserRole.WAREHOUSE_MANAGER, UserRole.OPERATOR),
+  createReceipt,
+);
+
+router.get(
+  "/receipts",
+  requireAuth,
+  listReceipts,
+);
+
+router.get(
+  "/receipts/:id",
+  requireAuth,
+  getReceipt,
+);
 
 export default router;

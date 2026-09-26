@@ -5,12 +5,32 @@ import {
   listLedger,
   listStock,
 } from "../controllers/stockController";
+import { requireAuth } from "../middleware/auth";
 
 const router = Router();
 
-router.get("/stock", listStock);
-router.get("/stock/:productId", getProductStock);
-router.get("/stock/:productId/:locationId", getStockAt);
-router.get("/stock-ledger", listLedger);
+router.get(
+  "/stock",
+  requireAuth,
+  listStock,
+);
+
+router.get(
+  "/stock/:productId",
+  requireAuth,
+  getProductStock,
+);
+
+router.get(
+  "/stock/:productId/:locationId",
+  requireAuth,
+  getStockAt,
+);
+
+router.get(
+  "/stock-ledger",
+  requireAuth,
+  listLedger,
+);
 
 export default router;

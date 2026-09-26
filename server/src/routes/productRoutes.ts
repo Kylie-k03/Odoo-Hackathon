@@ -5,12 +5,36 @@ import {
   listProducts,
   updateProduct,
 } from "../controllers/productController";
+import { requireAuth } from "../middleware/auth";
+import { requireRoles } from "../middleware/rbac";
+import { UserRole } from "@prisma/client";
 
 const router = Router();
 
-router.post("/products", createProduct);
-router.get("/products", listProducts);
-router.get("/products/:id", getProduct);
-router.patch("/products/:id", updateProduct);
+router.post(
+  "/products",
+  requireAuth,
+  requireRoles(UserRole.ADMIN, UserRole.WAREHOUSE_MANAGER),
+  createProduct,
+);
+
+router.get(
+  "/products",
+  requireAuth,
+  listProducts,
+);
+
+router.get(
+  "/products/:id",
+  requireAuth,
+  getProduct,
+);
+
+router.patch(
+  "/products/:id",
+  requireAuth,
+  requireRoles(UserRole.ADMIN, UserRole.WAREHOUSE_MANAGER),
+  updateProduct,
+);
 
 export default router;
