@@ -81,7 +81,7 @@ export function DashboardPage() {
               key={idx}
               className={`modern-card p-5 sm:p-6 flex flex-col justify-between ${
                 kpi.isWarning
-                  ? 'border-rose-100 ring-1 ring-rose-500/10 highlight-card-purple'
+                  ? 'border-rose-100 ring-1 ring-rose-500/10 highlight-card-navy'
                   : 'bg-white/80 backdrop-blur-md'
               }`}
             >

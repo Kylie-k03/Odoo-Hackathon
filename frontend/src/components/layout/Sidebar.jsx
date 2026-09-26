@@ -37,19 +37,19 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }) {
 
       {/* Sidebar container */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 flex w-64 flex-col bg-white border-r border-slate-100 shadow-[20px_0_40px_rgba(0,0,0,0.02)] transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-50 flex w-64 flex-col bg-slate-900 text-slate-200 border-r border-slate-800/90 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Brand / Logo */}
-        <div className="flex h-16 items-center justify-between px-6 border-b border-slate-100 bg-white/50 backdrop-blur-sm">
+        <div className="flex h-16 items-center justify-between px-6 border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 text-white font-bold shadow-lg shadow-indigo-500/30">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-600 text-white font-bold shadow-lg shadow-teal-600/30">
               <Boxes className="h-5 w-5" />
             </div>
             <div>
-              <span className="text-base font-bold text-slate-800 tracking-tight">StockSense</span>
-              <span className="block text-[10px] text-indigo-500 font-bold uppercase tracking-wider -mt-1">
+              <span className="text-base font-bold text-white tracking-tight">StockSense</span>
+              <span className="block text-[10px] text-teal-400 font-bold uppercase tracking-wider -mt-1">
                 Inventory OS
               </span>
             </div>
@@ -80,8 +80,8 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }) {
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] font-medium transition-all duration-300 ${
                     isActive
-                      ? 'bg-gradient-to-r from-indigo-50 to-cyan-50 text-indigo-700 shadow-sm border border-indigo-100/50 scale-[1.02]'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-indigo-600'
+                      ? 'bg-teal-600 text-white shadow-sm scale-[1.02]'
+                      : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
                   }`
                 }
               >
@@ -93,22 +93,22 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }) {
         </nav>
 
         {/* Bottom profile / quick footer */}
-        <div className="border-t border-slate-100 p-4 bg-slate-50/50">
+        <div className="border-t border-slate-800 p-4">
           <NavLink
             to="/profile"
             onClick={onCloseMobile}
             className={({ isActive }) =>
               `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
                 isActive
-                  ? 'bg-white shadow-sm border border-slate-200 text-indigo-600'
-                  : 'text-slate-700 hover:bg-white hover:shadow-sm hover:text-indigo-600 border border-transparent'
+                  ? 'bg-teal-600 text-white shadow-sm'
+                  : 'text-slate-300 hover:bg-slate-800/80 hover:text-white border border-transparent'
               }`
             }
           >
-            <UserCircle className="h-6 w-6 text-indigo-500 shrink-0" />
+            <UserCircle className="h-6 w-6 text-teal-400 shrink-0" />
             <div className="flex flex-col text-left min-w-0">
-              <span className="text-[13px] font-bold text-slate-800 truncate">Inventory Manager</span>
-              <span className="text-[11px] text-slate-500 truncate">admin@stocksense.local</span>
+              <span className="text-[13px] font-bold text-white truncate">Inventory Manager</span>
+              <span className="text-[11px] text-slate-400 truncate">admin@stocksense.local</span>
             </div>
           </NavLink>
         </div>
