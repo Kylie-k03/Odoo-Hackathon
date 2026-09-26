@@ -1,0 +1,26 @@
+# Build stage
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy client package definition
+COPY client/package*.json ./client/
+COPY package*.json ./
+
+# Install client dependencies
+RUN npm install --workspace=client
+
+# Copy client source code
+COPY client/ ./client/
+
+# Build client production bundle
+RUN npm run build --workspace=client
+
+# Production stage - Serve with lightweight Nginx
+FROM nginx:alpine AS runner
+
+COPY --from=builder /app/client/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
