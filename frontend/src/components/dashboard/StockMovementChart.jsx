@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Card } from '../common/Card'
+import { apiRequest } from '../../services/api'
 import {
   ResponsiveContainer,
   AreaChart,
@@ -41,17 +42,14 @@ export function StockMovementChart({ className = '' }) {
     // Attempt to fetch real ledger data for analytics
     const fetchLedger = async () => {
       try {
-        const res = await fetch('/api/stock-ledger')
-        if (res.ok) {
-          const json = await res.json()
-          // Basic client-side aggregation (mock implementation of grouping)
-          if (json.data && json.data.length > 0) {
-            // Aggregate by day... (simplified logic, using mock as fallback below)
-            // Real implementation would group json.data by createdAt date
-          }
+        const json = await apiRequest('/stock-ledger')
+        // Basic client-side aggregation (mock implementation of grouping)
+        if (json?.data && json.data.length > 0) {
+          // Aggregate by day... (simplified logic, using mock as fallback below)
+          // Real implementation would group json.data by createdAt date
         }
       } catch (err) {
-        console.warn("Backend offline, falling back to mock analytics data.")
+        console.warn(`Stock ledger unavailable (${err.status ?? 'error'}: ${err.message}); showing sample analytics data.`)
       }
     }
     fetchLedger()

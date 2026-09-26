@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Card } from '../common/Card'
 import { ArrowUpRight, AlertTriangle, Layers } from 'lucide-react'
+import { apiRequest } from '../../services/api'
 
 const mockTopStocked = [
   { name: 'Steel Rods', sku: 'RAW-STL-001', category: 'Raw Materials', qty: 100, max: 120, uom: 'kg', location: 'Main Store' },
@@ -23,17 +24,14 @@ export function InventorySnapshot({ className = '' }) {
   useEffect(() => {
     const fetchStock = async () => {
       try {
-        const res = await fetch('/api/stock')
-        if (res.ok) {
-          const json = await res.json()
-          if (json.data && json.data.length > 0) {
-            // Placeholder logic: would parse actual stock levels here
-            // setLiveTopStocked(...)
-            // setLiveThresholdRisk(...)
-          }
+        const json = await apiRequest('/stock')
+        if (json?.data && json.data.length > 0) {
+          // Placeholder logic: would parse actual stock levels here
+          // setLiveTopStocked(...)
+          // setLiveThresholdRisk(...)
         }
       } catch (err) {
-        console.warn("Backend offline, falling back to mock inventory data.")
+        console.warn(`Stock levels unavailable (${err.status ?? 'error'}: ${err.message}); showing sample inventory data.`)
       }
     }
     fetchStock()

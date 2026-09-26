@@ -1,10 +1,23 @@
-import { UserCircle, Shield, KeyRound, LogOut, CheckCircle2 } from 'lucide-react'
+import { Shield, KeyRound, LogOut } from 'lucide-react'
 import { Card } from '../components/common/Card'
 import { Button } from '../components/common/Button'
 import { Badge } from '../components/common/Badge'
 import { PageHeader } from '../components/layout/PageHeader'
+import { useAuth } from '../components/auth/authContext'
+import { roleAccess, roleLabel, rolePermissions, userInitials } from '../components/auth/userDisplay'
+
+function formatDate(value) {
+  if (!value) return '—'
+  const date = new Date(value)
+  return Number.isNaN(date.getTime())
+    ? '—'
+    : date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+}
 
 export function ProfilePage() {
+  const { user, logout } = useAuth()
+  const role = roleLabel(user?.role)
+
   return (
     <div className="space-y-5">
       <PageHeader
@@ -16,32 +29,32 @@ export function ProfilePage() {
         {/* User Card */}
         <Card className="text-center p-5 flex flex-col items-center">
           <div className="w-16 h-16 rounded-full bg-teal-50 border border-teal-200 text-teal-800 flex items-center justify-center text-xl font-bold mb-3 shadow-2xs">
-            AD
+            {userInitials(user)}
           </div>
-          <h2 className="text-base font-bold text-slate-900">Arya Dixit</h2>
-          <p className="text-xs text-slate-500 mb-3 font-mono">arya.dixit@example.com</p>
+          <h2 className="text-base font-bold text-slate-900">{user?.name}</h2>
+          <p className="text-xs text-slate-500 mb-3 font-mono">{user?.email}</p>
           <div className="flex items-center gap-1.5 mb-5">
-            <Badge variant="primary" size="md">Inventory Manager</Badge>
-            <Badge variant="done" size="md" dot>Active</Badge>
+            <Badge variant="primary" size="md">{role}</Badge>
+            <Badge variant="done" size="md" dot>Signed in</Badge>
           </div>
 
           <div className="w-full text-left border-t border-slate-100 pt-3.5 space-y-2 text-xs text-slate-600">
             <div className="flex justify-between items-center">
-              <span className="text-slate-400">Default Site:</span>
-              <span className="font-semibold text-slate-800">Main Warehouse (WH-MAIN)</span>
+              <span className="text-slate-400">Member Since:</span>
+              <span className="font-semibold text-slate-800">{formatDate(user?.createdAt)}</span>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-slate-400">Access Level:</span>
-              <span className="font-semibold text-slate-800">Full Approval & Config</span>
+            <div className="flex justify-between items-center gap-3">
+              <span className="text-slate-400 shrink-0">Access Level:</span>
+              <span className="font-semibold text-slate-800 text-right">{roleAccess(user?.role)}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-slate-400">Security Tier:</span>
-              <span className="font-semibold text-teal-700">Role-Based Access (Manager)</span>
+              <span className="font-semibold text-teal-700">Role-Based Access ({role})</span>
             </div>
           </div>
 
           <div className="w-full mt-5 pt-3.5 border-t border-slate-100">
-            <Button variant="danger" size="sm" icon={LogOut} className="w-full">
+            <Button variant="danger" size="sm" icon={LogOut} className="w-full" onClick={logout}>
               Sign Out
             </Button>
           </div>
@@ -75,7 +88,7 @@ export function ProfilePage() {
                 <span>Role-Based Access Control (RBAC) Permissions</span>
               </div>
               <p className="text-xs text-slate-500 leading-relaxed">
-                You are currently authenticated as an <strong>Inventory Manager</strong>. You have permissions to create/validate documents, configure locations, and approve stock adjustments. Warehouse staff accounts are restricted to execution operations (pick/pack/count).
+                You are signed in as <strong>{role}</strong>. {rolePermissions(user?.role)}
               </p>
             </div>
           </div>

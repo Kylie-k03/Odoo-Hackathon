@@ -12,6 +12,7 @@ import {
   Boxes,
   X
 } from 'lucide-react'
+import { useAuth } from '../auth/authContext'
 
 export const navItems = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
@@ -25,6 +26,8 @@ export const navItems = [
 ]
 
 export function Sidebar({ mobileOpen = false, onCloseMobile }) {
+  const { user } = useAuth()
+
   return (
     <>
       {/* Mobile backdrop */}
@@ -107,8 +110,8 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }) {
           >
             <UserCircle className="h-6 w-6 text-teal-400 shrink-0" />
             <div className="flex flex-col text-left min-w-0">
-              <span className="text-[13px] font-bold text-white truncate">Inventory Manager</span>
-              <span className="text-[11px] text-slate-400 truncate">admin@stocksense.local</span>
+              <span className="text-[13px] font-bold text-white truncate">{user?.name}</span>
+              <span className="text-[11px] text-slate-400 truncate">{user?.email}</span>
             </div>
           </NavLink>
         </div>

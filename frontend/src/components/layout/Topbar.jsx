@@ -1,7 +1,11 @@
 import { Menu, Bell, Search, ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../auth/authContext'
+import { roleLabel, userInitials } from '../auth/userDisplay'
 
 export function Topbar({ onOpenMobile }) {
+  const { user } = useAuth()
+
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-white/50 glass px-4 sm:px-6 shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
       <div className="flex items-center gap-3">
@@ -43,7 +47,7 @@ export function Topbar({ onOpenMobile }) {
         <div className="flex items-center gap-1.5 rounded-md bg-teal-50 border border-teal-200/80 px-2.5 py-1 text-xs font-medium text-teal-800">
           <ShieldCheck className="h-3.5 w-3.5 text-teal-600 shrink-0" />
           <span className="hidden sm:inline text-teal-700">Role:</span>
-          <span className="font-semibold text-teal-900">Manager</span>
+          <span className="font-semibold text-teal-900">{roleLabel(user?.role)}</span>
         </div>
 
         {/* Low-stock / Activity Alerts */}
@@ -60,9 +64,9 @@ export function Topbar({ onOpenMobile }) {
         <Link
           to="/profile"
           className="flex h-7.5 w-7.5 items-center justify-center rounded-md bg-slate-900 text-xs font-semibold text-white hover:bg-slate-800 transition-colors focus:outline-hidden focus:ring-2 focus:ring-teal-500/20"
-          title="User Profile"
+          title={user?.name ? `${user.name} — profile` : 'User Profile'}
         >
-          AD
+          {userInitials(user)}
         </Link>
       </div>
     </header>
