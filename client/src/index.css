@@ -1,12 +1,78 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
-:root {
-  color-scheme: light;
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased min-h-screen selection:bg-teal-500 selection:text-white;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    /* Tropical Glass soft mesh background */
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(175,100%,94%,1) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(215,100%,96%,1) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(170,80%,92%,1) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(190,100%,94%,1) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  /* Compact scrollbars for tables & sidebar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400;
+  }
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
+@layer components {
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_0_rgba(15,23,42,0.04)];
+  }
+  .glass-card {
+    @apply bg-white/60 backdrop-blur-md border border-white/70 shadow-xl shadow-teal-900/5 rounded-3xl transition-all duration-300;
+  }
+  .glass-card:hover {
+    @apply shadow-2xl shadow-teal-900/10 -translate-y-1;
+  }
+
+  /* Soft Neumorphism */
+  .neumorphic {
+    @apply bg-slate-50 rounded-2xl shadow-[10px_10px_20px_#d9e0e8,-10px_-10px_20px_#ffffff] border border-white/50;
+  }
+  .neumorphic-inset {
+    @apply bg-slate-50 rounded-xl shadow-[inset_5px_5px_10px_#d9e0e8,inset_-5px_-5px_10px_#ffffff];
+  }
+
+  /* Modern Card (like the reference images) */
+  .modern-card {
+    @apply bg-white rounded-3xl border border-slate-100 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-300;
+  }
+  .modern-card:hover {
+    @apply shadow-[0_20px_40px_-10px_rgba(0,0,0,0.12)] -translate-y-1;
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-teal-600;
+  }
+
+  /* Pills */
+  .modern-pill {
+    @apply flex items-center gap-3 px-6 py-4 bg-white rounded-full shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:scale-[1.02];
+  }
+
+  /* Soft solid highlight cards (like the teal and purple in reference) */
+  .highlight-card-teal {
+    @apply bg-gradient-to-br from-teal-400 to-teal-500 text-white shadow-lg shadow-teal-500/30 rounded-3xl overflow-hidden relative;
+  }
+  .highlight-card-navy {
+    @apply bg-gradient-to-br from-slate-800 to-slate-900 text-white shadow-lg shadow-slate-900/30 rounded-3xl overflow-hidden relative;
+  }
 }
