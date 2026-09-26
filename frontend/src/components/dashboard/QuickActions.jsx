@@ -38,7 +38,7 @@ export function QuickActions({ className = '' }) {
   ]
 
   return (
-    <div className={`rounded-lg border border-slate-200 bg-white p-2.5 shadow-2xs ${className}`}>
+    <div className={`glass-card p-4 sm:p-5 ${className}`}>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div className="flex items-center gap-1.5 px-1 text-xs font-semibold uppercase tracking-wider text-slate-500 shrink-0">
           <Zap className="h-3.5 w-3.5 text-teal-600" />
@@ -52,9 +52,11 @@ export function QuickActions({ className = '' }) {
               <Link
                 key={act.path}
                 to={act.path}
-                className={`flex items-center justify-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-800 transition-colors shadow-2xs focus:outline-hidden focus:ring-2 focus:ring-teal-500/20 ${act.bgHover}`}
+                className={`flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 rounded-2xl sm:rounded-full border border-slate-100 bg-white px-4 py-3 sm:py-2.5 text-[13px] font-medium text-slate-700 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_25px_-10px_rgba(0,0,0,0.15)] ${act.bgHover}`}
               >
-                <Icon className={`h-3.5 w-3.5 shrink-0 ${act.color}`} />
+                <div className={`p-2 rounded-full bg-slate-50/50 ${act.color}`}>
+                  <Icon className="h-4 w-4 shrink-0" />
+                </div>
                 <span className="truncate">{act.label}</span>
               </Link>
             )

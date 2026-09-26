@@ -79,41 +79,41 @@ export function DashboardPage() {
           return (
             <div
               key={idx}
-              className={`rounded-lg border bg-white p-3.5 sm:p-4 shadow-2xs transition-shadow hover:shadow-xs flex flex-col justify-between ${
+              className={`modern-card p-5 sm:p-6 flex flex-col justify-between ${
                 kpi.isWarning
-                  ? 'border-rose-200/90 ring-1 ring-rose-500/10'
-                  : 'border-slate-200'
+                  ? 'border-rose-100 ring-1 ring-rose-500/10 highlight-card-purple'
+                  : 'bg-white/80 backdrop-blur-md'
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                <span className={`text-xs font-semibold uppercase tracking-wider ${kpi.isWarning ? 'text-white/80' : 'text-slate-500'}`}>
                   {kpi.title}
                 </span>
                 <div
-                  className={`p-1.5 rounded-md ${
-                    kpi.isWarning ? 'bg-rose-50 text-rose-600' : 'bg-slate-100 text-slate-600'
+                  className={`p-2.5 rounded-2xl ${
+                    kpi.isWarning ? 'bg-white/20 text-white backdrop-blur-sm' : 'bg-gradient-to-br from-indigo-50 to-cyan-50 text-indigo-600'
                   }`}
                   aria-hidden="true"
                 >
-                  <Icon className="w-3.5 h-3.5" />
+                  <Icon className="w-4 h-4" />
                 </div>
               </div>
 
               <div className="mt-3">
                 <div className="flex items-baseline gap-1.5">
                   <span
-                    className={`text-2xl sm:text-3xl font-bold tabular-nums tracking-tight ${
-                      kpi.isWarning ? 'text-rose-700' : 'text-slate-900'
+                    className={`text-3xl sm:text-4xl font-bold tabular-nums tracking-tight ${
+                      kpi.isWarning ? 'text-white' : 'text-slate-800'
                     }`}
                   >
                     {kpi.value}
                   </span>
-                  <span className="text-xs font-medium text-slate-400">{kpi.unit}</span>
+                  <span className={`text-xs font-medium ${kpi.isWarning ? 'text-white/70' : 'text-slate-400'}`}>{kpi.unit}</span>
                 </div>
 
                 <div
-                  className={`text-[11px] mt-1 font-medium ${
-                    kpi.isWarning ? 'text-rose-600 font-semibold' : 'text-slate-500'
+                  className={`text-[11px] mt-2 font-medium ${
+                    kpi.isWarning ? 'text-white/90 font-semibold' : 'text-slate-500'
                   }`}
                 >
                   {kpi.context}

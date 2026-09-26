@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export function Topbar({ onOpenMobile }) {
   return (
-    <header className="sticky top-0 z-30 flex h-14 w-full items-center justify-between border-b border-slate-200 bg-white px-4 sm:px-6 shadow-2xs">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-white/50 glass px-4 sm:px-6 shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
       <div className="flex items-center gap-3">
         <button
           onClick={onOpenMobile}
