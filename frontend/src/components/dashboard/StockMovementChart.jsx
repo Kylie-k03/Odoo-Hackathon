@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card } from '../common/Card'
 import {
   ResponsiveContainer,
@@ -35,7 +35,29 @@ const datasets = {
 
 export function StockMovementChart({ className = '' }) {
   const [timeRange, setTimeRange] = useState('7d')
-  const data = datasets[timeRange] || datasets['7d']
+  const [liveData, setLiveData] = useState(null)
+  
+  useEffect(() => {
+    // Attempt to fetch real ledger data for analytics
+    const fetchLedger = async () => {
+      try {
+        const res = await fetch('/api/stock-ledger')
+        if (res.ok) {
+          const json = await res.json()
+          // Basic client-side aggregation (mock implementation of grouping)
+          if (json.data && json.data.length > 0) {
+            // Aggregate by day... (simplified logic, using mock as fallback below)
+            // Real implementation would group json.data by createdAt date
+          }
+        }
+      } catch (err) {
+        console.warn("Backend offline, falling back to mock analytics data.")
+      }
+    }
+    fetchLedger()
+  }, [])
+
+  const data = liveData || datasets[timeRange] || datasets['7d']
 
   const totalReceipts = data.reduce((acc, curr) => acc + curr.receipts, 0)
   const totalDeliveries = data.reduce((acc, curr) => acc + curr.deliveries, 0)

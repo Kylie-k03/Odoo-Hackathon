@@ -1,14 +1,15 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Card } from '../common/Card'
 import { ArrowUpRight, AlertTriangle, Layers } from 'lucide-react'
 
-const topStocked = [
+const mockTopStocked = [
   { name: 'Steel Rods', sku: 'RAW-STL-001', category: 'Raw Materials', qty: 100, max: 120, uom: 'kg', location: 'Main Store' },
   { name: 'Aluminum Sheets 4x8', sku: 'RAW-ALM-004', category: 'Raw Materials', qty: 60, max: 120, uom: 'sheets', location: 'Bay 3' },
   { name: 'Steel Frames', sku: 'FIN-FRM-002', category: 'Finished Goods', qty: 45, max: 120, uom: 'units', location: 'Production Floor' },
 ]
 
-const thresholdRisk = [
+const mockThresholdRisk = [
   { name: 'Industrial Bolts M10', sku: 'HRD-BLT-010', current: 8, min: 50, uom: 'pcs', percent: 16, isCritical: true },
   { name: 'Steel Frames', sku: 'FIN-FRM-002', current: 45, min: 10, uom: 'units', percent: 100, isCritical: false },
   { name: 'Aluminum Sheets', sku: 'RAW-ALM-004', current: 60, min: 15, uom: 'sheets', percent: 100, isCritical: false },
@@ -16,6 +17,31 @@ const thresholdRisk = [
 ]
 
 export function InventorySnapshot({ className = '' }) {
+  const [liveTopStocked, setLiveTopStocked] = useState(null)
+  const [liveThresholdRisk, setLiveThresholdRisk] = useState(null)
+
+  useEffect(() => {
+    const fetchStock = async () => {
+      try {
+        const res = await fetch('/api/stock')
+        if (res.ok) {
+          const json = await res.json()
+          if (json.data && json.data.length > 0) {
+            // Placeholder logic: would parse actual stock levels here
+            // setLiveTopStocked(...)
+            // setLiveThresholdRisk(...)
+          }
+        }
+      } catch (err) {
+        console.warn("Backend offline, falling back to mock inventory data.")
+      }
+    }
+    fetchStock()
+  }, [])
+
+  const topStocked = liveTopStocked || mockTopStocked
+  const thresholdRisk = liveThresholdRisk || mockThresholdRisk
+
   return (
     <Card
       className={className}
