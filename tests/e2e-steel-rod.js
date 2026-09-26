@@ -76,7 +76,6 @@ async function runTest() {
     const receiptRes = await request('/receipts', 'POST', {
       sourceLocationId: vendorLoc.id,
       destinationLocationId: mainStore.id,
-      status: 'CONFIRMED',
       lines: [{ productId: steelRod.id, quantity: 100 }]
     });
     if (receiptRes.status >= 400) console.error('Failed:', receiptRes.data);
@@ -87,7 +86,6 @@ async function runTest() {
     const transferRes = await request('/transfers', 'POST', {
       sourceLocationId: mainStore.id,
       destinationLocationId: productionRack.id,
-      status: 'CONFIRMED',
       lines: [{ productId: steelRod.id, quantity: 100 }]
     });
     if (transferRes.status >= 400) console.error('Failed:', transferRes.data);
@@ -95,18 +93,18 @@ async function runTest() {
 
     // 5. Delivery: 20 kg out
     // Needs a generic CUSTOMER location, attempting to find one or fallback
-    let customerLoc = locationsRes.data.data.find(l => l.type === 'CUSTOMER');
-    if (!customerLoc) {
-        // Mock fallback if customer location isn't seeded
-        customerLoc = { id: vendorLoc.id }; 
-        console.warn('⚠️ Customer location not found, using vendor loc as fallback for test.');
-    }
+    const customerLoc = locationsRes.data.data.find(
+  l => l.type === 'CUSTOMER'
+);
+
+if (!customerLoc) {
+  throw new Error('Customer location missing from QA seed');
+}
 
     console.log('\n5. Executing Delivery: -20 kg from Production Rack');
     const deliveryRes = await request('/deliveries', 'POST', {
       sourceLocationId: productionRack.id,
       destinationLocationId: customerLoc.id,
-      status: 'CONFIRMED',
       lines: [{ productId: steelRod.id, quantity: 20 }]
     });
     if (deliveryRes.status >= 400) console.error('Failed:', deliveryRes.data);
@@ -116,8 +114,7 @@ async function runTest() {
     console.log('\n6. Executing Adjustment: -3 kg damaged from Production Rack');
     const adjustRes = await request('/adjustments', 'POST', {
       locationId: productionRack.id,
-      status: 'CONFIRMED',
-      lines: [{ productId: steelRod.id, quantity: -3 }] // Service handles negative delta
+      lines: [{productId: steelRod.id, delta:-3}]// Service handles negative delta
     });
     if (adjustRes.status >= 400) console.error('Failed:', adjustRes.data);
     else console.log('✅ Adjustment created successfully.');

@@ -52,6 +52,23 @@ async function main() {
   });
   console.log(`✅ Locations initialized (Vendor, Main Store, Production Rack)`);
 
+  const customerLocation = await prisma.location.upsert({
+  where: {
+    warehouseId_code: {
+      warehouseId: warehouse.id,
+      code: "LOC-CUSTOMER",
+    },
+  },
+  update: {},
+  create: {
+    code: "LOC-CUSTOMER",
+    name: "Customer Location",
+    type: LocationType.CUSTOMER,
+    warehouseId: warehouse.id,
+  },
+});
+
+console.log(`✅ Location: ${customerLocation.name}`);
   // 3. Create Steel Rods Product
   const product = await prisma.product.upsert({
     where: { sku: 'RAW-STL-001' },
