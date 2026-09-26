@@ -13,7 +13,8 @@ RUN npm install --workspace=server
 # Copy server source code and prisma schema
 COPY server/ ./server/
 
-# Build backend typescript code
+# Generate Prisma Client and build backend typescript code
+RUN npm run prisma:generate --workspace=server
 RUN npm run build --workspace=server
 
 # Production stage
@@ -29,6 +30,9 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/server/package*.json ./server/
 RUN npm install --omit=dev --workspace=server
 
+# Copy generated Prisma Client and compiled server assets
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/server/dist ./server/dist
 COPY --from=builder /app/server/prisma ./server/prisma
 
