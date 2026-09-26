@@ -1,80 +1,43 @@
-# StockSense — Enterprise Inventory Management
+# StockSense — Enterprise Inventory Management System
 
 > Built for the Odoo Hackathon 2026.
 
-StockSense is an enterprise-grade, centralized inventory management platform inspired by Odoo's double-entry stock ledger architecture. It treats the stock ledger as an immutable single source of truth for all inventory movements.
+StockSense is a modular, real-time Inventory Management System designed for the Odoo Hackathon. It streamlines stock operations across warehouses with a single, auditable source of truth: the **Stock Ledger**.
 
 ---
 
-## 🏛️ Architecture Overview
+## 🏛️ Repository Architecture
 
-- **Frontend**: React (Vite SPA) + TypeScript + Tailwind CSS
-- **Backend**: Node.js + Express + TypeScript
-- **Database**: PostgreSQL with Prisma ORM
-- **Real-Time**: Socket.io / WebSockets
-- **Design System**: Enterprise SaaS Theme (Deep Navy, Action Teal, Alert Coral, Neutral Canvas)
+The project is structured for 4-person parallel team execution:
 
----
+- `/frontend` - React + Vite + Tailwind CSS UI Console & Warehouse Views (Member 1 Lead)
+- `/backend/core` - REST API & PostgreSQL Stock Ledger Transaction Engine (Member 2 Lead)
+- `/backend/auth` & `/backend/realtime` - Authentication, RBAC & Live Alert WebSockets (Member 3 Lead)
+- `/tests` & `/docs` - Validation, worked examples and delivery documentation (Member 4 Lead)
 
-## 📁 Repository Structure
-
-```text
-Odoo-Hackathon/
-├── client/                 # React + Vite + Tailwind CSS frontend
-├── server/                 # Node.js + Express + TypeScript backend
-├── docker-compose.yml      # Multi-container orchestration (Postgres + Backend + Frontend)
-├── Dockerfile.backend      # Container build for API server
-├── Dockerfile.frontend     # Container build for Web client
-├── package.json            # Root workspace orchestrator
-└── README.md
-```
+The system is designed around an immutable stock ledger so inventory movements remain auditable.
 
 ---
 
-## 🚀 Getting Started (Development)
+## 💻 Frontend Development
+
+The frontend console is built with:
+
+- **React**
+- **Vite**
+- **Tailwind CSS v4**
+- **React Router v7**
+- **Lucide React**
+- **Recharts**
 
 ### Prerequisites
-- Node.js (v20+ recommended, v24 supported)
-- npm (v10+)
-- PostgreSQL (or Docker for containerized setup)
 
-### 1. Install Dependencies
-```bash
-# Installs root and workspace dependencies for both client and server
-npm install
-```
+- **Node.js**: v18+ (tested on v22.x)
+- **npm**: v9+ (tested on v10.x)
 
-### 2. Configure Environment Variables
-Copy `.env.example` to `.env` in both `server/` and `client/`:
-```bash
-cp server/.env.example server/.env
-cp client/.env.example client/.env
-```
+### Quickstart
 
-### 3. Run Development Server
-```bash
-# Starts both server (port 5000) and client (port 5173) concurrently
-npm run dev
-```
-
-### 4. Health Check
-- Backend API Health: `http://localhost:5000/api/health`
-- Frontend Web App: `http://localhost:5173/`
-
----
-
-## 🐳 Running with Docker Compose
+1. Navigate to the frontend:
 
 ```bash
-docker compose up --build
-```
-- PostgreSQL: `localhost:5432`
-- Backend API: `localhost:5000`
-- Frontend UI: `localhost:3000`
-
----
-
-## 🔒 Security & Contribution Rules
-- All development remains on the `main` branch.
-- No direct stock quantity manipulation: all inventory levels are calculated from immutable ledger transactions.
-- Secrets must never be committed to Git.
+cd frontend
